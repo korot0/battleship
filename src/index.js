@@ -1,4 +1,4 @@
 import "./styles.css";
-import { todo } from "./todo.js";
+import { greeting } from "./greeting.js";
 
-console.log(todo);
+console.log(greeting);
