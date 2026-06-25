@@ -6,7 +6,6 @@
 
 export const Ship = (length) => {
   let hitCount = 0;
-  let active = false;
 
   const hit = () => {
     hitCount++;
@@ -14,14 +13,8 @@ export const Ship = (length) => {
 
   const isSunk = () => length === hitCount;
 
-  const toggleActive = () => (active = !active);
-
-  const isActive = () => active;
-
   return {
     hit,
     isSunk,
-    toggleActive,
-    isActive,
   };
 };
