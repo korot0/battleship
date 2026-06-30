@@ -5,6 +5,4 @@
 // TODO: Check boundaries
 // TODO: Check that ship is not placed next to another ship
 
-const Gameboard = () => {
-
-}
+export const GameBoard = () => {};

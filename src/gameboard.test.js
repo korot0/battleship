@@ -1,4 +1,4 @@
-import { Gameboard } from "./gameboard";
+import { GameBoard } from "./gameboard";
 
 // TODO: Gameboards should be able to place ships at specific coordinates by calling the ship factory or class.
 
