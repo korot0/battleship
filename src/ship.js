@@ -1,14 +1,22 @@
 export const Ship = (length) => {
   let hitCount = 0;
-
-  const hit = () => {
-    hitCount++;
-  };
-
-  const isSunk = () => length === hitCount;
+  let isDeployed = false;
 
   return {
-    hit,
-    isSunk,
+    get length() {
+      return length;
+    },
+    get isDeployed() {
+      return isDeployed;
+    },
+    hit() {
+      hitCount++;
+    },
+    isSunk() {
+      return hitCount >= length;
+    },
+    deploy() {
+      isDeployed = true;
+    },
   };
 };
