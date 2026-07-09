@@ -28,6 +28,7 @@ export const GameBoard = () => {
       }
     }
 
+    ships[shipName].deploy();
     return true;
   };
 

@@ -31,9 +31,11 @@ describe("Ship placement", () => {
       }
     }
   });
-});
 
-// NOTE: Test an already active ship placement
+  test("rejects an already active ship placement", () => {
+    expect(gameBoard.placeShip("patrolBoat", [1, 1], "h")).toBeFalsy();
+  });
+});
 
 // NOTE: Test out of bounds
 test("rejects horizontal placement out of bounds", () => {});
