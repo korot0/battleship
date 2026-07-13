@@ -12,20 +12,19 @@ export const GameBoard = () => {
   };
 
   const placeShip = (shipName, coordinates, direction) => {
-    let [row, column] = coordinates;
-    const offset = direction === "h" ? column : row;
-    const length = ships[shipName].length + offset;
-
     if (ships[shipName].isDeployed) return false;
 
+    let [row, column] = coordinates;
+    const shipLength = ships[shipName].length;
+    const offset = direction === "h" ? column : row;
+    const length = shipLength + offset;
+
+    if (isOutOfBounds(row, column, shipLength, direction)) return false;
+
     if (direction === "h") {
-      for (column; column < length; column++) {
-        board[row][column] = ships[shipName];
-      }
+      placeShipHorizontally(board, row, column, length, ships, shipName);
     } else if (direction === "v") {
-      for (row; row < length; row++) {
-        board[row][column] = ships[shipName];
-      }
+      placeShipVertically(board, row, column, length, ships, shipName);
     }
 
     ships[shipName].deploy();
@@ -41,6 +40,28 @@ export const GameBoard = () => {
       return ships;
     },
   };
+};
+
+const isOutOfBounds = (row, column, shipLength, direction) => {
+  let lastIndex;
+
+  direction === "h"
+    ? (lastIndex = column + shipLength - 1)
+    : (lastIndex = row + shipLength - 1);
+
+  return lastIndex > 9;
+};
+
+const placeShipHorizontally = (board, row, column, length, ships, shipName) => {
+  for (column; column < length; column++) {
+    board[row][column] = ships[shipName];
+  }
+};
+
+const placeShipVertically = (board, row, column, length, ships, shipName) => {
+  for (row; row < length; row++) {
+    board[row][column] = ships[shipName];
+  }
 };
 
 const makeBoard = () => {
