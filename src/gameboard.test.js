@@ -42,7 +42,7 @@ describe("Ship placement", () => {
   });
 
   test("rejects overlapping ship placement", () => {
-    expect(gameBoard.placeShip("carrier", [3, 7], "h")).toBeFalsy();
+    expect(gameBoard.placeShip("carrier", [5, 2], "h")).toBeFalsy();
   });
 
   // TODO: Test adjacent placement

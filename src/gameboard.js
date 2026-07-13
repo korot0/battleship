@@ -16,21 +16,15 @@ export const GameBoard = () => {
 
     let [row, column] = coordinates;
     const shipLength = ships[shipName].length;
-    const offset = direction === "h" ? column : row;
-    const length = shipLength + offset;
 
     if (isOutOfBounds(row, column, shipLength, direction)) return false;
+    if (isOverlapping(board, row, column, shipLength, direction)) return false;
 
-    if (direction === "h") {
-      for (column; column < length; column++) {
-        if (board[row][column] !== null) return false;
-        board[row][column] = ships[shipName];
-      }
-    } else if (direction === "v") {
-      for (row; row < length; row++) {
-        if (board[row][column] !== null) return false;
-        board[row][column] = ships[shipName];
-      }
+    for (let i = 0; i < shipLength; i++) {
+      const r = direction === "h" ? row : row + i;
+      const c = direction === "h" ? column + i : column;
+
+      board[r][c] = ships[shipName];
     }
 
     ships[shipName].deploy();
@@ -50,6 +44,16 @@ export const GameBoard = () => {
 
 const isOutOfBounds = (row, column, shipLength, direction) =>
   direction === "h" ? column + shipLength > 10 : row + shipLength > 10;
+
+const isOverlapping = (board, row, column, shipLength, direction) => {
+  for (let i = 0; i < shipLength; i++) {
+    const r = direction === "h" ? row : row + i;
+    const c = direction === "h" ? column + i : column;
+
+    if (board[r][c] !== null) return true;
+  }
+  return false;
+};
 
 const makeBoard = () => {
   const board = new Array(10);
