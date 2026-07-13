@@ -22,9 +22,15 @@ export const GameBoard = () => {
     if (isOutOfBounds(row, column, shipLength, direction)) return false;
 
     if (direction === "h") {
-      placeShipHorizontally(board, row, column, length, ships, shipName);
+      for (column; column < length; column++) {
+        if (board[row][column] !== null) return false;
+        board[row][column] = ships[shipName];
+      }
     } else if (direction === "v") {
-      placeShipVertically(board, row, column, length, ships, shipName);
+      for (row; row < length; row++) {
+        if (board[row][column] !== null) return false;
+        board[row][column] = ships[shipName];
+      }
     }
 
     ships[shipName].deploy();
@@ -42,27 +48,8 @@ export const GameBoard = () => {
   };
 };
 
-const isOutOfBounds = (row, column, shipLength, direction) => {
-  let lastIndex;
-
-  direction === "h"
-    ? (lastIndex = column + shipLength - 1)
-    : (lastIndex = row + shipLength - 1);
-
-  return lastIndex > 9;
-};
-
-const placeShipHorizontally = (board, row, column, length, ships, shipName) => {
-  for (column; column < length; column++) {
-    board[row][column] = ships[shipName];
-  }
-};
-
-const placeShipVertically = (board, row, column, length, ships, shipName) => {
-  for (row; row < length; row++) {
-    board[row][column] = ships[shipName];
-  }
-};
+const isOutOfBounds = (row, column, shipLength, direction) =>
+  direction === "h" ? column + shipLength > 10 : row + shipLength > 10;
 
 const makeBoard = () => {
   const board = new Array(10);

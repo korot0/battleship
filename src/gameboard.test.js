@@ -17,21 +17,19 @@ describe("Ship placement", () => {
     let [row, column] = coordinates;
 
     if (direction === "h") {
-      for (let i = 0; i < length; i++) {
+      for (let i = 0; i < length; i++)
         expect(gameBoard.board[row][column + i]).toEqual(
           gameBoard.ships[shipName],
         );
-      }
     } else if (direction === "v") {
-      for (let i = 0; i < length; i++) {
+      for (let i = 0; i < length; i++)
         expect(gameBoard.board[row + i][column]).toEqual(
           gameBoard.ships[shipName],
         );
-      }
     }
   });
 
-  test("rejects an already active ship", () => {
+  test("rejects an already deployed ship", () => {
     expect(gameBoard.placeShip("patrolBoat", [1, 1], "h")).toBeFalsy();
   });
 
@@ -43,8 +41,9 @@ describe("Ship placement", () => {
     expect(gameBoard.placeShip("carrier", [7, 7], "v")).toBeFalsy();
   });
 
-  // TODO: Test overlapping placement
-  test("rejects overlapping ship placement", () => {});
+  test("rejects overlapping ship placement", () => {
+    expect(gameBoard.placeShip("carrier", [3, 7], "h")).toBeFalsy();
+  });
 
   // TODO: Test adjacent placement
   test("rejects placement adjacent to another ship", () => {});
