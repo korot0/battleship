@@ -6,9 +6,9 @@ const gameBoard = GameBoard();
 
 describe("Ship placement", () => {
   test.each([
-    ["patrolBoat", [1, 1], "h"],
+    ["patrolBoat", [0, 0], "h"],
     ["submarine", [5, 6], "h"],
-    ["destroyer", [0, 7], "v"],
+    ["destroyer", [7, 9], "v"],
     ["battleship", [9, 0], "h"],
   ])("Places %s at %s %s", (shipName, coordinates, direction) => {
     gameBoard.placeShip(shipName, coordinates, direction);
@@ -45,17 +45,12 @@ describe("Ship placement", () => {
     expect(gameBoard.placeShip("carrier", [5, 2], "h")).toBeFalsy();
   });
 
-  // TODO: Test adjacent placement
-  test.only("rejects placement adjacent to another ship", () => {
-    expect(gameBoard.placeShip("carrier", [4, 2], "h")).toBeFalsy();
+  test("rejects placement adjacent to another ship", () => {
+    expect(gameBoard.placeShip("carrier", [8, 3], "h")).toBeFalsy();
   });
 
   test("rejects placement adjacent to another ship", () => {
-    expect(gameBoard.placeShip("carrier", [1, 3], "h")).toBeFalsy();
-  });
-
-  test("rejects placement adjacent to another ship", () => {
-    expect(gameBoard.placeShip("carrier", [4, 4], "v")).toBeFalsy();
+    expect(gameBoard.placeShip("carrier", [1, 2], "v")).toBeFalsy();
   });
 });
 

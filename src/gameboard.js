@@ -19,6 +19,8 @@ export const GameBoard = () => {
 
     if (isOutOfBounds(row, column, shipLength, direction)) return false;
     if (isOverlapping(board, row, column, shipLength, direction)) return false;
+    if (isAdjacent(board, row, column, shipLength, direction, ships))
+      return false;
 
     for (let i = 0; i < shipLength; i++) {
       const r = direction === "h" ? row : row + i;
@@ -40,6 +42,33 @@ export const GameBoard = () => {
       return ships;
     },
   };
+};
+
+const isAdjacent = (board, row, column, shipLength, direction, ships) => {
+  if (direction === "h") {
+    for (let i = -1; i <= shipLength; i++) {
+      const up = board[row - 1]?.[column + i];
+      const down = board[row + 1]?.[column + i];
+
+      if (
+        Object.values(ships).includes(up) ||
+        Object.values(ships).includes(down)
+      )
+        return true;
+    }
+  } else if (direction === "v") {
+    for (let i = -1; i <= shipLength; i++) {
+      const left = board[row + i]?.[column - 1];
+      const right = board[row + i]?.[column + 1];
+
+      if (
+        Object.values(ships).includes(left) ||
+        Object.values(ships).includes(right)
+      )
+        return true;
+    }
+  }
+  return false;
 };
 
 const isOutOfBounds = (row, column, shipLength, direction) =>
