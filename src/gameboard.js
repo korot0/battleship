@@ -11,6 +11,7 @@ export const GameBoard = () => {
     patrolBoat: Ship(2),
   };
 
+// TODO: Refactor
   const placeShip = (shipName, coordinates, direction) => {
     if (ships[shipName].isDeployed) return false;
 
@@ -33,17 +34,26 @@ export const GameBoard = () => {
     return true;
   };
 
+  // TODO: Gameboards should keep track of missed attacks so they can display them properly.
+  const receiveAttack = (coordinate) => {};
+
+  // TODO: Gameboards should be able to report whether or not all of their ships have been sunk.
+  const allShipsSunk = () => {};
+
   return {
-    placeShip,
     get board() {
       return board;
     },
     get ships() {
       return ships;
     },
+    placeShip,
+    receiveAttack,
+    allShipsSunk,
   };
 };
 
+// TODO: Refactor
 const isAdjacent = (board, row, column, shipLength, direction, ships) => {
   if (direction === "h") {
     for (let i = -1; i <= shipLength; i++) {

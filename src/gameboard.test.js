@@ -2,8 +2,6 @@ import { GameBoard } from "./gameboard";
 
 const gameBoard = GameBoard();
 
-// TODO: Gameboards should be able to place ships at specific coordinates by calling the ship factory or class.
-
 describe("Ship placement", () => {
   test.each([
     ["patrolBoat", [0, 0], "h"],
