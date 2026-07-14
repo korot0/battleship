@@ -46,7 +46,17 @@ describe("Ship placement", () => {
   });
 
   // TODO: Test adjacent placement
-  test("rejects placement adjacent to another ship", () => {});
+  test.only("rejects placement adjacent to another ship", () => {
+    expect(gameBoard.placeShip("carrier", [4, 2], "h")).toBeFalsy();
+  });
+
+  test("rejects placement adjacent to another ship", () => {
+    expect(gameBoard.placeShip("carrier", [1, 3], "h")).toBeFalsy();
+  });
+
+  test("rejects placement adjacent to another ship", () => {
+    expect(gameBoard.placeShip("carrier", [4, 4], "v")).toBeFalsy();
+  });
 });
 
 // TODO: Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot.
