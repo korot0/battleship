@@ -11,7 +11,7 @@ export const GameBoard = () => {
     patrolBoat: Ship(2),
   };
 
-// TODO: Refactor
+  // TODO: Refactor
   const placeShip = (shipName, coordinates, direction) => {
     if (ships[shipName].isDeployed) return false;
 
@@ -53,36 +53,22 @@ export const GameBoard = () => {
   };
 };
 
-// TODO: Refactor
 const isAdjacent = (board, row, column, shipLength, direction, ships) => {
-  if (direction === "h") {
-    for (let i = -1; i <= shipLength; i++) {
-      const up = board[row - 1]?.[column + i];
-      const down = board[row + 1]?.[column + i];
+  for (let i = -1; i <= shipLength; i++) {
+    const r = direction === "h" ? row : row + i;
+    const c = direction === "h" ? column + i : column;
+    const up = direction === "h" ? board[r - 1]?.[c] : board[r]?.[c - 1];
+    const down = direction === "h" ? board[r + 1]?.[c] : board[r]?.[c + 1];
 
-      if (
-        Object.values(ships).includes(up) ||
-        Object.values(ships).includes(down)
-      )
-        return true;
-    }
-  } else if (direction === "v") {
-    for (let i = -1; i <= shipLength; i++) {
-      const left = board[row + i]?.[column - 1];
-      const right = board[row + i]?.[column + 1];
-
-      if (
-        Object.values(ships).includes(left) ||
-        Object.values(ships).includes(right)
-      )
-        return true;
-    }
+    if (
+      Object.values(ships).includes(up) ||
+      Object.values(ships).includes(down)
+    )
+      return true;
   }
+
   return false;
 };
-
-const isOutOfBounds = (row, column, shipLength, direction) =>
-  direction === "h" ? column + shipLength > 10 : row + shipLength > 10;
 
 const isOverlapping = (board, row, column, shipLength, direction) => {
   for (let i = 0; i < shipLength; i++) {
@@ -93,6 +79,9 @@ const isOverlapping = (board, row, column, shipLength, direction) => {
   }
   return false;
 };
+
+const isOutOfBounds = (row, column, shipLength, direction) =>
+  direction === "h" ? column + shipLength > 10 : row + shipLength > 10;
 
 const makeBoard = () => {
   const board = new Array(10);
