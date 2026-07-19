@@ -11,10 +11,7 @@ export const GameBoard = () => {
     patrolBoat: Ship(2),
   };
 
-  // TODO: Refactor
   const placeShip = (shipName, coordinates, direction) => {
-    if (ships[shipName].isDeployed) return false;
-
     let [row, column] = coordinates;
     const shipLength = ships[shipName].length;
 
@@ -30,7 +27,6 @@ export const GameBoard = () => {
       board[r][c] = ships[shipName];
     }
 
-    ships[shipName].deploy();
     return true;
   };
 

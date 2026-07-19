@@ -27,10 +27,6 @@ describe("Ship placement", () => {
     }
   });
 
-  test("rejects an already deployed ship", () => {
-    expect(gameBoard.placeShip("patrolBoat", [1, 1], "h")).toBeFalsy();
-  });
-
   test("rejects horizontal placement out of bounds", () => {
     expect(gameBoard.placeShip("carrier", [4, 6], "h")).toBeFalsy();
   });
