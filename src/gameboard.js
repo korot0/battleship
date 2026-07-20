@@ -2,6 +2,7 @@ import { Ship } from "./ship";
 
 export const GameBoard = () => {
   const board = makeBoard();
+  const hitHistory = new Set();
 
   const ships = {
     carrier: Ship(5),
@@ -30,11 +31,24 @@ export const GameBoard = () => {
     return true;
   };
 
-  // TODO: Gameboards should keep track of missed attacks so they can display them properly.
-  const receiveAttack = (coordinate) => {};
+  const receiveAttack = (coordinates) => {
+    const [r, c] = coordinates;
 
-  // TODO: Gameboards should be able to report whether or not all of their ships have been sunk.
-  const allShipsSunk = () => {};
+    if (hitHistory.has(`${r},${c}`)) return false;
+
+    board[r][c] === null ? (board[r][c] = "x") : board[r][c].hit();
+
+    hitHistory.add(`${r},${c}`);
+
+    return true;
+  };
+
+  const allShipsSunk = () => {
+    for (const ship of Object.values(ships)) {
+      if (!ship.isSunk()) return false;
+    }
+    return true;
+  };
 
   return {
     get board() {

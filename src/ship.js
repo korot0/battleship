@@ -5,6 +5,9 @@ export const Ship = (length) => {
     get length() {
       return length;
     },
+    get hitCount() {
+      return hitCount;
+    },
     hit() {
       hitCount++;
     },

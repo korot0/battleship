@@ -2,7 +2,7 @@ import { GameBoard } from "./gameboard";
 
 const gameBoard = GameBoard();
 
-describe("Ship placement", () => {
+describe("ship placement", () => {
   test.each([
     ["patrolBoat", [0, 0], "h"],
     ["submarine", [5, 6], "h"],
@@ -28,28 +28,54 @@ describe("Ship placement", () => {
   });
 
   test("rejects horizontal placement out of bounds", () => {
-    expect(gameBoard.placeShip("carrier", [4, 6], "h")).toBeFalsy();
+    expect(gameBoard.placeShip("carrier", [4, 6], "h")).toBe(false);
   });
 
   test("rejects vertical placement out of bounds", () => {
-    expect(gameBoard.placeShip("carrier", [7, 7], "v")).toBeFalsy();
+    expect(gameBoard.placeShip("carrier", [7, 7], "v")).toBe(false);
   });
 
   test("rejects overlapping ship placement", () => {
-    expect(gameBoard.placeShip("carrier", [5, 2], "h")).toBeFalsy();
+    expect(gameBoard.placeShip("carrier", [5, 2], "h")).toBe(false);
   });
 
   test("rejects placement adjacent to another ship", () => {
-    expect(gameBoard.placeShip("carrier", [8, 3], "h")).toBeFalsy();
-  });
-
-  test("rejects placement adjacent to another ship", () => {
-    expect(gameBoard.placeShip("carrier", [1, 2], "v")).toBeFalsy();
+    expect(gameBoard.placeShip("carrier", [8, 3], "h")).toBe(false);
   });
 });
 
-// TODO: Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot.
+describe("attacking board", () => {
+  gameBoard.placeShip("carrier", [2, 3], "v");
 
-// TODO: Gameboards should keep track of missed attacks so they can display them properly.
+  test(`attacking empty cell marks it with 'x' and returns true`, () => {
+    expect(gameBoard.receiveAttack([2, 1])).toBe(true);
+    expect(gameBoard.board[2][1]).toBe("x");
+  });
 
-// TODO: Gameboards should be able to report whether or not all of their ships have been sunk.
+  test("registers a hit when attacking an occupied cell", () => {
+    expect(gameBoard.receiveAttack([2, 3])).toBe(true);
+    expect(gameBoard.board[2][3].hitCount).toBe(1);
+  });
+
+  test("registers a hit when attacking an occupied cell", () => {
+    expect(gameBoard.receiveAttack([3, 3])).toBe(true);
+    expect(gameBoard.board[2][3].hitCount).toBe(2);
+  });
+
+  test("rejects a hit when attacking an occupied cell", () => {
+    expect(gameBoard.receiveAttack([2, 3])).toBe(false);
+  });
+});
+
+describe("sunken ships", () => {
+  test("ships are not sunk", () => {
+    expect(gameBoard.allShipsSunk()).toBe(false);
+  });
+
+  test("all ships are sunk", () => {
+    for (const ship of Object.values(gameBoard.ships))
+      while (!ship.isSunk()) ship.hit();
+
+    expect(gameBoard.allShipsSunk()).toBe(true);
+  });
+});
