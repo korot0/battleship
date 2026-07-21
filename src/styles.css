@@ -2,6 +2,8 @@
   --bg-dark: #0a2540;
   --bg-light: #e8f1f8;
 
+  --cell-bg: #12395e;
+
   --text-on-dark: #f4f7fa;
   --text-on-light: #0a2540;
 
@@ -19,10 +21,32 @@
 body {
   background-color: var(--bg-dark);
   font-family: var(--font-body);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1 {
   color: var(--text-on-dark);
   text-align: center;
   margin: 1rem;
+}
+
+.game-container {
+  margin: 2rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.player-board,
+.computer-board {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
+  gap: 2px;
+}
+
+.cell {
+  background-color: var(--cell-bg);
 }
