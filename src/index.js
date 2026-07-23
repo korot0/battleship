@@ -2,8 +2,8 @@ import "./reset.css";
 import "./styles.css";
 
 // TODO: populate grids
-const playerBoard = document.querySelector(".player-board");
-const computerBoard = document.querySelector(".computer-board");
+const playerBoard = document.querySelector(".board--player > .board__grid");
+const computerBoard = document.querySelector(".board--computer > .board__grid");
 
 // NOTE: dummy cells
 for (let index = 0; index < 100; index++) {

@@ -6,10 +6,17 @@
     <title>Battleship</title>
   </head>
   <body>
-    <h1>BATTLESHIP</h1>
-    <div class="game-container">
-      <div class="player-board"></div>
-      <div class="computer-board"></div>
+    <h1 class="game-title">BATTLESHIP</h1>
+    <div class="board-layout">
+      <section class="board board--player">
+        <h2 class="board__label">PLAYER</h2>
+        <div class="board__grid"></div>
+      </section>
+      <div class="board-layout__divider">VS</div>
+      <section class="board board--computer">
+        <h2 class="board__label">COMPUTER</h2>
+        <div class="board__grid"></div>
+      </section>
     </div>
   </body>
 </html>

@@ -1,18 +1,19 @@
 :root {
-  --bg-dark: #0a2540;
-  --bg-light: #e8f1f8;
+  --bg-dark: #131826;
+  --bg-light: #f4f6fb;
 
-  --cell-bg: #12395e;
+  --cell-bg: #232a3d;
+  --grid-line: #3a4358;
 
-  --text-on-dark: #f4f7fa;
-  --text-on-light: #0a2540;
+  --text-on-dark: #c7cedd;
+  --text-on-light: #131826;
 
-  --grid-line: #c9d6e3;
-  --ship: #4a5568;
-  --hit: #e74c3c;
-  --miss: #5b7c99;
-  --sunk: #8b1e1e;
-  --accent: #2c7a7b;
+  --ship: #6b7488;
+  --hit: #ff5470;
+  --miss: #4f7cff;
+  --sunk: #ff1f4c;
+  --accent: #7c5cff;
+
   --text-on-accent: #ffffff;
 
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -27,24 +28,36 @@ body {
   align-items: center;
 }
 
-h1 {
+.game-title {
   color: var(--text-on-dark);
   text-align: center;
   margin: 1rem;
 }
 
-.game-container {
+.board-layout__divider {
+  font-size: 1.5rem;
+  color: var(--text-on-dark);
+  align-self: center;
+}
+
+.board-layout {
   margin: 2rem;
   display: flex;
   gap: 2rem;
 }
 
-.player-board,
-.computer-board {
+.board__grid {
   display: grid;
-  grid-template-columns: repeat(10, 40px);
-  grid-template-rows: repeat(10, 40px);
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
   gap: 2px;
+}
+
+.board__label {
+  color: var(--text-on-dark);
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .cell {
