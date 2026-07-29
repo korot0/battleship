@@ -34,8 +34,9 @@ body {
   margin: 1rem;
 }
 
-.board-layout__divider {
+.board-layout-divider {
   font-size: 1.5rem;
+  font-weight: bold;
   color: var(--text-on-dark);
   align-self: center;
 }
@@ -46,14 +47,14 @@ body {
   gap: 2rem;
 }
 
-.board__grid {
+.board-grid {
   display: grid;
-  grid-template-columns: repeat(10, 50px);
-  grid-template-rows: repeat(10, 50px);
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
   gap: 2px;
 }
 
-.board__label {
+.board-label {
   color: var(--text-on-dark);
   text-align: center;
   margin-bottom: 1rem;
@@ -62,4 +63,8 @@ body {
 
 .cell {
   background-color: var(--cell-bg);
+}
+
+.ship {
+  background-color: var(--ship);
 }
