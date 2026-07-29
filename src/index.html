@@ -9,13 +9,23 @@
     <h1 class="game-title">BATTLESHIP</h1>
     <div class="board-layout">
       <section class="board board-player">
-        <h2 class="board-label">PLAYER</h2>
         <div class="board-grid"></div>
       </section>
-      <div class="board-layout-divider">VS</div>
-      <section class="board board-computer">
-        <h2 class="board-label">COMPUTER</h2>
+      <div class="board-layout-divider hidden">VS</div>
+      <section class="board board-computer hidden">
         <div class="board-grid"></div>
+      </section>
+      <section class="ship-selection">
+        <p class="ship-selection-description">
+          Drag the ships, and then click to rotate:
+        </p>
+        <div class="ship-selection-container">
+          <div class="carrier"></div>
+          <div class="battleship"></div>
+          <div class="cruiser"></div>
+          <div class="submarine"></div>
+          <div class="destroyer"></div>
+        </div>
       </section>
     </div>
   </body>
