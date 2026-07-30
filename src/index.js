@@ -2,48 +2,49 @@ import "./reset.css";
 import "./styles.css";
 
 import { Player } from "./player.js";
+import { DomController } from "./domController.js";
 
-// NOTE: populate dummy grids
-const playerBoard = document.querySelector(".board-player > .board-grid");
-const computerBoard = document.querySelector(".board-computer > .board-grid");
+// NOTE: Move this inside a module?
+const realPlayerBoard = document.querySelector(".board-player > .board-grid");
+const computerBoard = document.querySelector(".board-oponent > .board-grid");
 
-// NOTE: dummy cells
-function createCells(parent) {
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      const cell = document.createElement("div");
-      cell.className = "cell";
-      cell.dataset.row = i;
-      cell.dataset.column = j;
-      parent.appendChild(cell);
-
-      cell.addEventListener("click", function () {
-        logCellCoordinates(cell);
-      });
-    }
-  }
-}
-
-createCells(playerBoard);
-createCells(computerBoard);
-
-function logCellCoordinates(cell) {
-  console.log(`(${cell.dataset.row},${cell.dataset.column})`);
-}
+// Initial setup
+const domController = DomController();
+domController.renderGrid(realPlayerBoard);
+domController.renderGrid(computerBoard);
 
 // NOTE: dummy game
 const realPlayer = Player();
 const computerPlayer = Player();
 
+// Player turn
 realPlayer.placeShip("patrolBoat", [0, 0], "h");
-realPlayer.placeShip("submarine", [5, 6], "h");
-realPlayer.placeShip("destroyer", [9, 9], "v");
-realPlayer.placeShip("battleship", [9, 0], "h");
-realPlayer.placeShip("carrier", [2, 3], "v");
+domController.renderShip(realPlayer, realPlayerBoard);
 
-// NOTE: this needs to be automated later
+realPlayer.placeShip("submarine", [5, 6], "h");
+domController.renderShip(realPlayer, realPlayerBoard);
+
+realPlayer.placeShip("destroyer", [7, 9], "v");
+domController.renderShip(realPlayer, realPlayerBoard);
+
+realPlayer.placeShip("battleship", [9, 0], "h");
+domController.renderShip(realPlayer, realPlayerBoard);
+
+realPlayer.placeShip("carrier", [2, 3], "v");
+domController.renderShip(realPlayer, realPlayerBoard);
+
+// Computer turn
 computerPlayer.placeShip("patrolBoat", [6, 5], "h");
+domController.renderShip(computerPlayer, computerBoard);
+
 computerPlayer.placeShip("submarine", [0, 6], "h");
+domController.renderShip(computerPlayer, computerBoard);
+
 computerPlayer.placeShip("destroyer", [5, 9], "v");
+domController.renderShip(computerPlayer, computerBoard);
+
 computerPlayer.placeShip("battleship", [8, 0], "h");
+domController.renderShip(computerPlayer, computerBoard);
+
 computerPlayer.placeShip("carrier", [0, 3], "v");
+domController.renderShip(computerPlayer, computerBoard);

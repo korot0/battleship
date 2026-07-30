@@ -2,6 +2,7 @@ import { GameBoard } from "./gameboard";
 
 export const Player = () => {
   const board = GameBoard();
+
   return {
     get board() {
       return board;

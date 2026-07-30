@@ -1,21 +1,16 @@
 :root {
   --bg-dark: #131826;
-  --bg-light: #f4f6fb;
 
   --cell-bg: #232a3d;
   --grid-line: #3a4358;
 
-  --text-on-dark: #c7cedd;
-  --text-on-light: #131826;
+  --text: #c7cedd;
 
   --ship: #6b7488;
   --ship-border: #4a5268;
   --hit: #ff5470;
   --miss: #4f7cff;
   --sunk: #ff1f4c;
-  --accent: #7c5cff;
-
-  --text-on-accent: #ffffff;
 
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -27,37 +22,39 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  color: var(--text);
+  text-align: center;
 }
 
 .game-title {
-  color: var(--text-on-dark);
-  text-align: center;
-  margin: 1rem;
+  margin: 3rem;
 }
 
 .board-layout-divider {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--text-on-dark);
   align-self: center;
 }
 
 .board-layout {
   margin: 2rem;
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .board-grid {
   display: grid;
   grid-template-columns: repeat(10, 40px);
   grid-template-rows: repeat(10, 40px);
-  gap: 2px;
+  gap: 3px;
+}
+
+.board-grid + p {
+  margin-top: 1rem;
 }
 
 .board-label {
-  color: var(--text-on-dark);
-  text-align: center;
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }
@@ -75,7 +72,6 @@ body {
 }
 
 .ship-selection-description {
-  color: var(--text-on-dark);
   margin-bottom: 1rem;
 }
 

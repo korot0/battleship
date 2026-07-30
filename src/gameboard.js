@@ -4,7 +4,7 @@ export const GameBoard = () => {
   const board = makeBoard();
   const hitHistory = new Set();
   const missedShots = new Set();
-  const shipBuffer = [];
+  let shipBuffer = [];
 
   const ships = {
     carrier: Ship(5),
@@ -18,7 +18,7 @@ export const GameBoard = () => {
     let [row, column] = coordinates;
     const shipLength = ships[shipName].length;
 
-    shipBuffer.pop();
+    shipBuffer = [];
 
     if (isOutOfBounds(row, column, shipLength, direction)) return false;
     if (isOverlapping(board, row, column, shipLength, direction)) return false;
