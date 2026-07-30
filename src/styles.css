@@ -96,9 +96,7 @@ body {
 .battleship {
   width: 160px;
 }
-.cruiser {
-  width: 120px;
-}
+.cruiser,
 .submarine {
   width: 120px;
 }
