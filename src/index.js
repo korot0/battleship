@@ -34,17 +34,39 @@ realPlayer.placeShip("carrier", [2, 3], "v");
 domController.renderShip(realPlayer, realPlayerBoard);
 
 // Computer turn
-computerPlayer.placeShip("patrolBoat", [6, 5], "h");
+computerPlayer.placeShip("patrolBoat", [5, 6], "h");
 domController.renderShip(computerPlayer, computerBoard);
 
-computerPlayer.placeShip("submarine", [0, 6], "h");
+computerPlayer.placeShip("submarine", [0, 7], "v");
 domController.renderShip(computerPlayer, computerBoard);
 
-computerPlayer.placeShip("destroyer", [5, 9], "v");
+computerPlayer.placeShip("destroyer", [3, 2], "v");
 domController.renderShip(computerPlayer, computerBoard);
 
 computerPlayer.placeShip("battleship", [8, 0], "h");
 domController.renderShip(computerPlayer, computerBoard);
 
-computerPlayer.placeShip("carrier", [0, 3], "v");
+computerPlayer.placeShip("carrier", [0, 0], "h");
 domController.renderShip(computerPlayer, computerBoard);
+
+realPlayerBoard.addEventListener("click", (event) => {
+  console.log(event.target);
+});
+
+computerBoard.addEventListener("click", (event) => {
+  const el = event.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
+  if (!el) return;
+
+  const [r, c] = [el.dataset.row, el.dataset.column];
+
+  const response = realPlayer.attack(computerPlayer, [r, c]);
+
+  if (response === "hit") {
+    el.className = "hit";
+  } else if (response === "miss") {
+    el.className = "miss";
+  } else {
+    document.querySelector(".announcements").textContent =
+      "Invalid shot, try again...";
+  }
+});
