@@ -3,7 +3,6 @@ import { Ship } from "./ship";
 export const GameBoard = () => {
   const board = makeBoard();
   const hitHistory = new Set();
-  const missedShots = new Set();
   let shipBuffer = [];
 
   const ships = {
@@ -39,18 +38,17 @@ export const GameBoard = () => {
   const receiveAttack = (coordinates) => {
     const [r, c] = coordinates;
 
-    if (hitHistory.has(`${r},${c}`) || missedShots.has(`${r},${c}`))
-      return false;
+    if (hitHistory.has(`${r},${c}`)) return "invalid";
+
+    hitHistory.add(`${r},${c}`);
 
     if (board[r][c] === null) {
       board[r][c] = "x";
-      missedShots.add(`${r},${c}`);
+      return "miss";
     } else {
       board[r][c].hit();
-      hitHistory.add(`${r},${c}`);
+      return "hit";
     }
-
-    return true;
   };
 
   const allShipsSunk = () => {

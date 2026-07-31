@@ -47,23 +47,23 @@ describe("ship placement", () => {
 describe("attacking board", () => {
   gameBoard.placeShip("carrier", [2, 3], "v");
 
-  test(`attacking empty cell marks it with 'x' and returns true`, () => {
-    expect(gameBoard.receiveAttack([2, 1])).toBe(true);
+  test(`attacking empty cell marks it with 'x' and returns miss`, () => {
+    expect(gameBoard.receiveAttack([2, 1])).toBe("miss");
     expect(gameBoard.board[2][1]).toBe("x");
   });
 
   test("registers a hit when attacking an occupied cell", () => {
-    expect(gameBoard.receiveAttack([2, 3])).toBe(true);
+    expect(gameBoard.receiveAttack([2, 3])).toBe("hit");
     expect(gameBoard.board[2][3].hitCount).toBe(1);
   });
 
   test("registers a hit when attacking an occupied cell", () => {
-    expect(gameBoard.receiveAttack([3, 3])).toBe(true);
+    expect(gameBoard.receiveAttack([3, 3])).toBe("hit");
     expect(gameBoard.board[2][3].hitCount).toBe(2);
   });
 
   test("rejects a hit when attacking an occupied cell", () => {
-    expect(gameBoard.receiveAttack([2, 3])).toBe(false);
+    expect(gameBoard.receiveAttack([2, 3])).toBe("invalid");
   });
 });
 
