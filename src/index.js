@@ -1,72 +1,46 @@
 import "./reset.css";
 import "./styles.css";
 
-import { Player } from "./player.js";
 import { DomController } from "./domController.js";
-
-// NOTE: Move this inside a module?
-const realPlayerBoard = document.querySelector(".board-player > .board-grid");
-const computerBoard = document.querySelector(".board-oponent > .board-grid");
+import { Player } from "./player.js";
 
 // Initial setup
 const domController = DomController();
-domController.renderGrid(realPlayerBoard);
-domController.renderGrid(computerBoard);
+domController.renderGrids();
 
-// NOTE: dummy game
-const realPlayer = Player();
-const computerPlayer = Player();
+// NOTE: Flow: User drags ship to the board -> A listener from the dom calls the gameController to place the ship -> gameController tells domController to render it
 
-// Player turn
-realPlayer.placeShip("patrolBoat", [0, 0], "h");
-domController.renderShip(realPlayer, realPlayerBoard);
+// TODO: GameController
+const playerOne = Player(1, "Human");
+const playerTwo = Player(2, "Computer");
 
-realPlayer.placeShip("submarine", [5, 6], "h");
-domController.renderShip(realPlayer, realPlayerBoard);
+// NOTE: This smells funny...
+domController.attachListeners(playerOne, playerTwo);
 
-realPlayer.placeShip("destroyer", [7, 9], "v");
-domController.renderShip(realPlayer, realPlayerBoard);
+// Ship placement sim
+if (true) {
+  playerOne.placeShip("patrolBoat", [0, 0], "h");
+  domController.renderShip(playerOne);
+  playerOne.placeShip("submarine", [5, 6], "h");
+  domController.renderShip(playerOne);
+  playerOne.placeShip("destroyer", [7, 9], "v");
+  domController.renderShip(playerOne);
+  playerOne.placeShip("battleship", [9, 0], "h");
+  domController.renderShip(playerOne);
+  playerOne.placeShip("carrier", [2, 3], "v");
+  domController.renderShip(playerOne);
 
-realPlayer.placeShip("battleship", [9, 0], "h");
-domController.renderShip(realPlayer, realPlayerBoard);
+  playerTwo.placeShip("patrolBoat", [5, 6], "h");
+  domController.renderShip(playerTwo);
+  playerTwo.placeShip("submarine", [0, 7], "v");
+  domController.renderShip(playerTwo);
+  playerTwo.placeShip("destroyer", [3, 2], "v");
+  domController.renderShip(playerTwo);
+  playerTwo.placeShip("battleship", [8, 0], "h");
+  domController.renderShip(playerTwo);
+  playerTwo.placeShip("carrier", [0, 0], "h");
+  domController.renderShip(playerTwo);
+}
 
-realPlayer.placeShip("carrier", [2, 3], "v");
-domController.renderShip(realPlayer, realPlayerBoard);
-
-// Computer turn
-computerPlayer.placeShip("patrolBoat", [5, 6], "h");
-domController.renderShip(computerPlayer, computerBoard);
-
-computerPlayer.placeShip("submarine", [0, 7], "v");
-domController.renderShip(computerPlayer, computerBoard);
-
-computerPlayer.placeShip("destroyer", [3, 2], "v");
-domController.renderShip(computerPlayer, computerBoard);
-
-computerPlayer.placeShip("battleship", [8, 0], "h");
-domController.renderShip(computerPlayer, computerBoard);
-
-computerPlayer.placeShip("carrier", [0, 0], "h");
-domController.renderShip(computerPlayer, computerBoard);
-
-realPlayerBoard.addEventListener("click", (event) => {
-  console.log(event.target);
-});
-
-computerBoard.addEventListener("click", (event) => {
-  const el = event.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
-  if (!el) return;
-
-  const [r, c] = [el.dataset.row, el.dataset.column];
-
-  const response = realPlayer.attack(computerPlayer, [r, c]);
-
-  if (response === "hit") {
-    el.className = "hit";
-  } else if (response === "miss") {
-    el.className = "miss";
-  } else {
-    document.querySelector(".announcements").textContent =
-      "Invalid shot, try again...";
-  }
-});
+// Game flow
+let currentPlayer = playerOne;

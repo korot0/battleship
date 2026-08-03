@@ -47,7 +47,7 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 40px);
   grid-template-rows: repeat(10, 40px);
-  gap: 5px;
+  gap: 3px;
 }
 
 .board-grid + p {
@@ -62,19 +62,15 @@ body {
 .cell {
   background-color: var(--cell-bg);
 }
-
 .ship {
   background-color: var(--ship);
 }
-
 .hit {
   background-color: var(--hit);
 }
-
 .miss {
   background-color: var(--miss);
 }
-
 .hidden {
   display: none;
 }

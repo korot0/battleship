@@ -1,9 +1,15 @@
 import { GameBoard } from "./gameboard";
 
-export const Player = () => {
+export const Player = (id, type) => {
   const board = GameBoard();
 
   return {
+    get id() {
+      return id;
+    },
+    get type() {
+      return type;
+    },
     get board() {
       return board;
     },
