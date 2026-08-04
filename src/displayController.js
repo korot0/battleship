@@ -1,4 +1,4 @@
-export const DomController = () => {
+export const DisplayController = () => {
   const playerOneBoard = document.querySelector(
     ".board-playerOne > .board-grid",
   );
@@ -22,13 +22,30 @@ export const DomController = () => {
     });
   };
 
-  const attachListeners = (playerOne, playerTwo) => {
-    playerTwoBoard.addEventListener("click", (e) => {
-      _handleCellClick(e, playerOne, playerTwo);
-    });
+  const renderAttackedCell = (el, response) => {
+    if (response === "hit") {
+      el.className = "hit";
+    } else if (response === "miss") {
+      el.className = "miss";
+    } else {
+      document.querySelector(".announcements").textContent =
+        "Invalid shot, try again...";
+    }
   };
 
-  // PRIVATE METHODS
+  const addAttackListeners = (mode, callback) => {
+    if (mode === "pvc") {
+    } else {
+      playerOneBoard.addEventListener("click", (e) => {
+        callback(_handleCellSelection(e));
+      });
+      playerTwoBoard.addEventListener("click", (e) => {
+        callback(_handleCellSelection(e));
+      });
+    }
+  };
+
+  // INFO: PRIVATE METHODS
   const _renderGrid = (parent) => {
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -41,29 +58,18 @@ export const DomController = () => {
     }
   };
 
-  // NOTE: Doing too many things at once. Getting coordinates, attacking, and changing cell colors
-  const _handleCellClick = (e, attacker, defender) => {
+  const _handleCellSelection = (e) => {
     const el = e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
-    if (!el) return;
 
-    const [r, c] = [el.dataset.row, el.dataset.column];
-
-    // NOTE: this belongs to gameController
-    const response = attacker.attack(defender, [r, c]);
-
-    if (response === "hit") {
-      el.className = "hit";
-    } else if (response === "miss") {
-      el.className = "miss";
-    } else {
-      document.querySelector(".announcements").textContent =
-        "Invalid shot, try again...";
-    }
+    return !el ? null : _getCoordinates(el);
   };
+
+  const _getCoordinates = (el) => [el.dataset.row, el.dataset.column];
 
   return {
     renderGrids,
     renderShip,
-    attachListeners,
+    renderAttackedCell,
+    addAttackListeners,
   };
 };
