@@ -12,7 +12,7 @@ export const DisplayController = () => {
   };
 
   const renderShip = (player) => {
-    const boardEl = player.id === 1 ? playerOneBoard : playerTwoBoard;
+    const boardEl = _getCurrentGridEl(player);
     const shipCoordinates = player.board.shipBuffer;
 
     shipCoordinates.forEach((coordinate) => {
@@ -28,7 +28,6 @@ export const DisplayController = () => {
     } else {
       playerOneBoard.addEventListener("click", (e) => {
         const cells = _getCellEl(e);
-        console.log(cells);
         if (!cells) return;
         const coordinates = _getCoordinates(cells);
         const attackResponse = callback(coordinates);
@@ -44,7 +43,15 @@ export const DisplayController = () => {
     }
   };
 
+  const switchActiveGrid = (attacker, defender) => {
+    _disableGrid(attacker);
+    _enableGrid(defender);
+  };
+
   // INFO: PRIVATE METHODS
+  const _getCurrentGridEl = (player) =>
+    player.id === 1 ? playerOneBoard : playerTwoBoard;
+
   const _renderGrid = (parent) => {
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -55,6 +62,14 @@ export const DisplayController = () => {
         parent.appendChild(cell);
       }
     }
+  };
+
+  const _disableGrid = (player) => {
+    _getCurrentGridEl(player).classList.add("disabled");
+  };
+
+  const _enableGrid = (player) => {
+    _getCurrentGridEl(player).classList.remove("disabled");
   };
 
   const _getCellEl = (e) => e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
@@ -76,5 +91,6 @@ export const DisplayController = () => {
     renderGrids,
     renderShip,
     addAttackListeners,
+    switchActiveGrid,
   };
 };

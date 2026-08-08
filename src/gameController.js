@@ -13,6 +13,7 @@ export const GameController = () => {
   const start = (mode) => {
     displayController.renderGrids();
     displayController.addAttackListeners(mode, _attack);
+    displayController.switchActiveGrid(attacker, defender);
   };
 
   // WARN: dummy ship placement
@@ -43,16 +44,13 @@ export const GameController = () => {
   // INFO: PRIVATE METHODS
   const _attack = (coordinates) => {
     const attackResponse = attacker.attack(defender, coordinates);
-
     _changeTurn();
-  // TODO: Disable attacker's grid
     return attackResponse;
   };
 
   const _changeTurn = () => {
-    let temp = attacker;
-    attacker = defender;
-    defender = temp;
+    [attacker, defender] = [defender, attacker];
+    displayController.switchActiveGrid(attacker, defender);
   };
 
   return {
