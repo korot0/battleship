@@ -22,25 +22,23 @@ export const DisplayController = () => {
     });
   };
 
-  const renderAttackedCell = (el, response) => {
-    if (response === "hit") {
-      el.className = "hit";
-    } else if (response === "miss") {
-      el.className = "miss";
-    } else {
-      document.querySelector(".announcements").textContent =
-        "Invalid shot, try again...";
-    }
-  };
-
   const addAttackListeners = (mode, callback) => {
     if (mode === "pvc") {
     } else {
       playerOneBoard.addEventListener("click", (e) => {
-        callback(_handleCellSelection(e));
+        const cells = _getCellEl(e);
+        console.log(cells);
+        if (!cells) return;
+        const coordinates = _getCoordinates(cells);
+        const response = callback(coordinates);
+        _renderAttackedCell(response, cells);
       });
       playerTwoBoard.addEventListener("click", (e) => {
-        callback(_handleCellSelection(e));
+        const cells = _getCellEl(e);
+        if (!cells) return;
+        const coordinates = _getCoordinates(cells);
+        const response = callback(coordinates);
+        _renderAttackedCell(response, cells);
       });
     }
   };
@@ -58,18 +56,24 @@ export const DisplayController = () => {
     }
   };
 
-  const _handleCellSelection = (e) => {
-    const el = e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
-
-    return !el ? null : _getCoordinates(el);
-  };
+  const _getCellEl = (e) => e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
 
   const _getCoordinates = (el) => [el.dataset.row, el.dataset.column];
+
+  const _renderAttackedCell = (response, cells) => {
+    if (response === "hit") {
+      cells.className = "hit";
+    } else if (response === "miss") {
+      cells.className = "miss";
+    } else {
+      document.querySelector(".announcements").textContent =
+        "Invalid shot, try again...";
+    }
+  };
 
   return {
     renderGrids,
     renderShip,
-    renderAttackedCell,
     addAttackListeners,
   };
 };
