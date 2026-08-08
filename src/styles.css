@@ -71,9 +71,6 @@ body {
 .miss {
   background-color: var(--miss);
 }
-.hidden {
-  display: none;
-}
 
 .ship-selection-description {
   margin-bottom: 1rem;
@@ -102,4 +99,13 @@ body {
 }
 .destroyer {
   width: 80px;
+}
+
+/* Utility */
+.hidden {
+  display: none;
+}
+
+.disabled {
+  pointer-events: none;
 }

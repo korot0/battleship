@@ -22,6 +22,7 @@ export const DisplayController = () => {
     });
   };
 
+  // FIX: Too many things happening here!
   const addAttackListeners = (mode, callback) => {
     if (mode === "pvc") {
     } else {
@@ -30,15 +31,15 @@ export const DisplayController = () => {
         console.log(cells);
         if (!cells) return;
         const coordinates = _getCoordinates(cells);
-        const response = callback(coordinates);
-        _renderAttackedCell(response, cells);
+        const attackResponse = callback(coordinates);
+        _renderAttackedCell(attackResponse, cells);
       });
       playerTwoBoard.addEventListener("click", (e) => {
         const cells = _getCellEl(e);
         if (!cells) return;
         const coordinates = _getCoordinates(cells);
-        const response = callback(coordinates);
-        _renderAttackedCell(response, cells);
+        const attackResponse = callback(coordinates);
+        _renderAttackedCell(attackResponse, cells);
       });
     }
   };

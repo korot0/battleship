@@ -6,7 +6,7 @@ export const GameController = () => {
 
   // NOTE: Will need to add playerOne and playerTwo creation to function based on pvp or pvc
   const playerOne = Player(1, "Human");
-  const playerTwo = Player(2, "Computer"); // WARN: Change to human
+  const playerTwo = Player(2, "Human"); // WARN: Change to human
   let attacker = playerOne;
   let defender = playerTwo;
 
@@ -41,14 +41,12 @@ export const GameController = () => {
   };
 
   // INFO: PRIVATE METHODS
-  // TODO: Disable attacker's grid
   const _attack = (coordinates) => {
-    if (!coordinates) return;
+    const attackResponse = attacker.attack(defender, coordinates);
 
-    const response = attacker.attack(defender, coordinates);
-
-    // _changeTurn();
-    return response;
+    _changeTurn();
+  // TODO: Disable attacker's grid
+    return attackResponse;
   };
 
   const _changeTurn = () => {
