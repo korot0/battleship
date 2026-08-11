@@ -6,14 +6,14 @@ export const GameController = () => {
 
   // NOTE: Will need to add playerOne and playerTwo creation to function based on pvp or pvc
   const playerOne = Player(1, "Human");
-  const playerTwo = Player(2, "Human"); // WARN: Change to human
+  const playerTwo = Player(2, "Human");
   let attacker = playerOne;
   let defender = playerTwo;
 
   const start = (mode) => {
     displayController.renderGrids();
     displayController.addAttackListeners(mode, _attack);
-    displayController.switchActiveGrid(attacker, defender);
+    displayController.toggleActiveGrid(attacker);
   };
 
   // WARN: dummy ship placement
@@ -50,7 +50,12 @@ export const GameController = () => {
 
   const _changeTurn = () => {
     [attacker, defender] = [defender, attacker];
-    displayController.switchActiveGrid(attacker, defender);
+    _toggleActiveGrids();
+  };
+
+  const _toggleActiveGrids = () => {
+    displayController.toggleActiveGrid(attacker);
+    displayController.toggleActiveGrid(defender);
   };
 
   return {

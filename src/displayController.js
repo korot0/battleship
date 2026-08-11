@@ -43,9 +43,8 @@ export const DisplayController = () => {
     }
   };
 
-  const switchActiveGrid = (attacker, defender) => {
-    _disableGrid(attacker);
-    _enableGrid(defender);
+  const toggleActiveGrid = (player) => {
+    _getCurrentGridEl(player).classList.toggle("disabled");
   };
 
   // INFO: PRIVATE METHODS
@@ -62,14 +61,6 @@ export const DisplayController = () => {
         parent.appendChild(cell);
       }
     }
-  };
-
-  const _disableGrid = (player) => {
-    _getCurrentGridEl(player).classList.add("disabled");
-  };
-
-  const _enableGrid = (player) => {
-    _getCurrentGridEl(player).classList.remove("disabled");
   };
 
   const _getCellEl = (e) => e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
@@ -91,6 +82,6 @@ export const DisplayController = () => {
     renderGrids,
     renderShip,
     addAttackListeners,
-    switchActiveGrid,
+    toggleActiveGrid,
   };
 };
