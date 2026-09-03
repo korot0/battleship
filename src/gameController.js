@@ -30,15 +30,15 @@ export const GameController = () => {
     displayController.renderShip(playerOne);
 
     playerTwo.placeShip("patrolBoat", [5, 6], "h");
-    displayController.renderShip(playerTwo);
+    // displayController.renderShip(playerTwo);
     playerTwo.placeShip("submarine", [1, 7], "v");
-    displayController.renderShip(playerTwo);
+    // displayController.renderShip(playerTwo);
     playerTwo.placeShip("destroyer", [3, 2], "v");
-    displayController.renderShip(playerTwo);
+    // displayController.renderShip(playerTwo);
     playerTwo.placeShip("battleship", [8, 2], "h");
-    displayController.renderShip(playerTwo);
+    // displayController.renderShip(playerTwo);
     playerTwo.placeShip("carrier", [1, 0], "h");
-    displayController.renderShip(playerTwo);
+    // displayController.renderShip(playerTwo);
   };
 
   // INFO: PRIVATE METHODS

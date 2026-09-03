@@ -39,7 +39,7 @@ describe("ship placement", () => {
     expect(gameBoard.placeShip("carrier", [5, 2], "h")).toBe(false);
   });
 
-  test("rejects placement adjacent to another ship", () => {
+  test("rejects placement adjacent te another ship", () => {
     expect(gameBoard.placeShip("carrier", [8, 3], "h")).toBe(false);
   });
 });
@@ -74,7 +74,7 @@ describe("sunken ships", () => {
 
   test("all ships are sunk", () => {
     for (const ship of Object.values(gameBoard.ships))
-      while (!ship.isSunk()) ship.hit();
+      for (let i = 0; i < ship.length; i++) ship.hit([0, i]);
 
     expect(gameBoard.allShipsSunk()).toBe(true);
   });
