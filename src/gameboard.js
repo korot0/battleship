@@ -3,6 +3,10 @@ import { Ship } from "./ship";
 export const GameBoard = () => {
   const board = makeBoard();
   const missHistory = new Set();
+  // TODO:
+  const unattackedCoordinates = new Set();
+
+  // NOTE: For rendering purposes
   let shipBuffer = [];
 
   const ships = {
@@ -29,6 +33,8 @@ export const GameBoard = () => {
       const c = direction === "h" ? column + i : column;
 
       board[r][c] = ships[shipName];
+      unattackedCoordinates.add(`${r},${c}`);
+      // NOTE: might be redundant
       shipBuffer.push({ x: r, y: c });
     }
 
