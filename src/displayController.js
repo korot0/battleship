@@ -2,6 +2,7 @@ export const DisplayController = () => {
   const playerOneBoard = document.querySelector(
     ".board-playerOne > .board-grid",
   );
+
   const playerTwoBoard = document.querySelector(
     ".board-playerTwo > .board-grid",
   );
@@ -36,6 +37,21 @@ export const DisplayController = () => {
     _getCurrentGridEl(player).classList.toggle("disabled");
   };
 
+  const renderShips = (player) => {
+    const board = player.board.board;
+    const boardEl = _getCurrentGridEl(player);
+
+    for (let row = 0; row < 10; row++) {
+      for (let col = 0; col < 10; col++) {
+        if (board[row][col] !== null) {
+          boardEl.querySelector(
+            `[data-row="${row}"][data-column="${col}"`,
+          ).className = "ship";
+        }
+      }
+    }
+  }
+
   // INFO: PRIVATE METHODS
   const _getCurrentGridEl = (player) =>
     player.id === 1 ? playerOneBoard : playerTwoBoard;
@@ -69,7 +85,7 @@ export const DisplayController = () => {
 
   return {
     renderGrids,
-    renderShip,
+    renderShips,
     addAttackListeners,
     toggleActiveGrid,
   };

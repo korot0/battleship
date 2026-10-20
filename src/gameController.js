@@ -16,6 +16,11 @@ export const GameController = () => {
     displayController.toggleActiveGrid(attacker);
   };
 
+  const renderShips = () => {
+    displayController.renderShips(playerOne);
+    displayController.renderShips(playerTwo);
+  }
+
   // WARN: dummy ship placement
   const placeDummyShips = () => {
     playerOne.placeShip("patrolBoat", [0, 0], "h");
@@ -50,6 +55,7 @@ export const GameController = () => {
 
   return {
     start,
+    renderShips,
     placeDummyShips,
   };
 };
