@@ -11,16 +11,6 @@ export const DisplayController = () => {
     _renderGrid(playerTwoBoard);
   };
 
-  const renderShip = (player) => {
-    const boardEl = _getCurrentGridEl(player);
-
-    shipCoordinates.forEach((coordinate) => {
-      boardEl.querySelector(
-        `[data-row="${coordinate.x}"][data-column="${coordinate.y}"`,
-      ).className = "ship";
-    });
-  };
-
   // FIX: Too many things happening here!
   const addAttackListeners = (mode, callback) => {
     if (mode === "pvc") {
