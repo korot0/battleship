@@ -40,7 +40,7 @@ export const GameBoard = () => {
     attackHistory.add(key);
 
     if (board[r][c] === null) {
-      board[r][c] = "x";
+      board[r][c] = "miss";
       return "miss";
     } else {
       board[r][c].hit();

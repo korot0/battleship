@@ -18,7 +18,7 @@ export const GameController = () => {
 
   const renderShips = () => {
     displayController.renderShips(playerOne);
-    displayController.renderShips(playerTwo);
+    // displayController.renderShips(playerTwo);
   }
 
   // WARN: dummy ship placement

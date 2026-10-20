@@ -47,9 +47,9 @@ describe("ship placement", () => {
 describe("attacking board", () => {
   gameBoard.placeShip("carrier", [2, 3], "v");
 
-  test(`attacking empty cell marks it with 'x' and returns miss`, () => {
+  test("attacking empty cell marks it with 'miss' and returns miss", () => {
     expect(gameBoard.receiveAttack([2, 1])).toBe("miss");
-    expect(gameBoard.board[2][1]).toBe("x");
+    expect(gameBoard.board[2][1]).toBe("miss");
   });
 
   test("registers a hit when attacking an occupied cell", () => {

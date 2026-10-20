@@ -40,17 +40,29 @@ export const DisplayController = () => {
   const renderShips = (player) => {
     const board = player.board.board;
     const boardEl = _getCurrentGridEl(player);
+    const attackHistory = player.board.attackHistory;
 
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
-        if (board[row][col] !== null) {
-          boardEl.querySelector(
-            `[data-row="${row}"][data-column="${col}"`,
-          ).className = "ship";
+        const cell = board[row][col];
+        const cellEl = boardEl.querySelector(
+          `[data-row="${row}"][data-column="${col}"]`,
+        );
+
+        if (cell === "miss") {
+          cellEl.className = "miss";
+        } else if (cell !== null) {
+          if (attackHistory.has(`${row},${col}`)) {
+            cellEl.className = "hit";
+          } else {
+            cellEl.className = "ship";
+          }
+        } else {
+          cellEl.className = "cell";
         }
       }
     }
-  }
+  };
 
   // INFO: PRIVATE METHODS
   const _getCurrentGridEl = (player) =>
