@@ -39,7 +39,7 @@ describe("ship placement", () => {
     expect(gameBoard.placeShip("carrier", [5, 2], "h")).toBe(false);
   });
 
-  test("rejects placement adjacent to another ship", () => {
+  test("rejects placement adjacent te another ship", () => {
     expect(gameBoard.placeShip("carrier", [8, 3], "h")).toBe(false);
   });
 });
@@ -47,23 +47,23 @@ describe("ship placement", () => {
 describe("attacking board", () => {
   gameBoard.placeShip("carrier", [2, 3], "v");
 
-  test(`attacking empty cell marks it with 'x' and returns true`, () => {
-    expect(gameBoard.receiveAttack([2, 1])).toBe(true);
+  test(`attacking empty cell marks it with 'x' and returns miss`, () => {
+    expect(gameBoard.receiveAttack([2, 1])).toBe("miss");
     expect(gameBoard.board[2][1]).toBe("x");
   });
 
   test("registers a hit when attacking an occupied cell", () => {
-    expect(gameBoard.receiveAttack([2, 3])).toBe(true);
+    expect(gameBoard.receiveAttack([2, 3])).toBe("hit");
     expect(gameBoard.board[2][3].hitCount).toBe(1);
   });
 
   test("registers a hit when attacking an occupied cell", () => {
-    expect(gameBoard.receiveAttack([3, 3])).toBe(true);
+    expect(gameBoard.receiveAttack([3, 3])).toBe("hit");
     expect(gameBoard.board[2][3].hitCount).toBe(2);
   });
 
   test("rejects a hit when attacking an occupied cell", () => {
-    expect(gameBoard.receiveAttack([2, 3])).toBe(false);
+    expect(gameBoard.receiveAttack([2, 3])).toBe("invalid");
   });
 });
 
@@ -74,7 +74,7 @@ describe("sunken ships", () => {
 
   test("all ships are sunk", () => {
     for (const ship of Object.values(gameBoard.ships))
-      while (!ship.isSunk()) ship.hit();
+      for (let i = 0; i < ship.length; i++) ship.hit([0, i]);
 
     expect(gameBoard.allShipsSunk()).toBe(true);
   });

@@ -5,5 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Battleship</title>
   </head>
-  <body></body>
+  <body>
+    <h1 class="game-title">BATTLESHIP</h1>
+    <p class="announcements">Place your ships...</p>
+    <div class="board-layout">
+      <section class="board board-playerOne">
+        <div class="board-grid"></div>
+        <p>Player One</p>
+      </section>
+      <div class="board-layout-divider">vs</div>
+      <section class="board board-playerTwo">
+        <div class="board-grid"></div>
+        <p>Player Two</p>
+      </section>
+      <section class="ship-selection hidden">
+        <p class="ship-selection-description">Drag the ships to the grid:</p>
+        <div class="ship-selection-container">
+          <div class="carrier"></div>
+          <div class="battleship"></div>
+          <div class="cruiser"></div>
+          <div class="submarine"></div>
+          <div class="destroyer"></div>
+        </div>
+      </section>
+    </div>
+  </body>
 </html>

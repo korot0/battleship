@@ -2,7 +2,7 @@ import { Ship } from "./ship";
 
 export const GameBoard = () => {
   const board = makeBoard();
-  const hitHistory = new Set();
+  const attackHistory = new Set();
 
   const ships = {
     carrier: Ship(5),
@@ -33,14 +33,19 @@ export const GameBoard = () => {
 
   const receiveAttack = (coordinates) => {
     const [r, c] = coordinates;
+    const key = `${r},${c}`;
 
-    if (hitHistory.has(`${r},${c}`)) return false;
+    if (attackHistory.has(key)) return "invalid";
 
-    board[r][c] === null ? (board[r][c] = "x") : board[r][c].hit();
+    attackHistory.add(key);
 
-    hitHistory.add(`${r},${c}`);
-
-    return true;
+    if (board[r][c] === null) {
+      board[r][c] = "x";
+      return "miss";
+    } else {
+      board[r][c].hit();
+      return "hit";
+    }
   };
 
   const allShipsSunk = () => {
@@ -56,6 +61,9 @@ export const GameBoard = () => {
     },
     get ships() {
       return ships;
+    },
+    get attackHistory() {
+      return attackHistory;
     },
     placeShip,
     receiveAttack,

@@ -1,7 +1,114 @@
+/*  TODO: Fix ship container shrinking */
+
 :root {
-  --white: #f2f2f2;
+  --bg-dark: #131826;
+
+  --cell-bg: #232a3d;
+  --grid-line: #3a4358;
+
+  --text: #c7cedd;
+
+  --ship: #6b7488;
+  --ship-border: #4a5268;
+  --hit: #ff5470;
+  --miss: #4f7cff;
+  --sunk: #ff1f4c;
+
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-  background-color: rebeccapurple;
+  background-color: var(--bg-dark);
+  font-family: var(--font-body);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: var(--text);
+  text-align: center;
+}
+
+.game-title {
+  margin: 3rem;
+}
+
+.board-layout-divider {
+  font-size: 1.5rem;
+  font-weight: bold;
+  align-self: center;
+}
+
+.board-layout {
+  margin: 2rem;
+  display: flex;
+  gap: 3rem;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
+  gap: 3px;
+}
+
+.board-grid + p {
+  margin-top: 1rem;
+}
+
+.board-label {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.cell {
+  background-color: var(--cell-bg);
+}
+.ship {
+  background-color: var(--ship);
+}
+.hit {
+  background-color: var(--hit);
+}
+.miss {
+  background-color: var(--miss);
+}
+
+.ship-selection-description {
+  margin-bottom: 1rem;
+}
+
+.ship-selection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.ship-selection-container > div {
+  height: 40px;
+  background-color: var(--ship);
+  border: solid 3px var(--ship-border);
+}
+.carrier {
+  width: 200px;
+}
+.battleship {
+  width: 160px;
+}
+.cruiser,
+.submarine {
+  width: 120px;
+}
+.destroyer {
+  width: 80px;
+}
+
+/* Utility */
+.hidden {
+  display: none;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }

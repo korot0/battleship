@@ -10,6 +10,7 @@ export const Ship = (length) => {
     },
     hit() {
       hitCount++;
+      return true;
     },
     isSunk() {
       return hitCount >= length;
