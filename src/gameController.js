@@ -16,9 +16,11 @@ export const GameController = () => {
     displayController.toggleActiveGrid(attacker);
   };
 
-  const renderShips = () => {
+  const renderShips = (mode) => {
     displayController.renderShips(playerOne);
-    // displayController.renderShips(playerTwo);
+    if (mode == "pvp") {
+      displayController.renderShips(playerTwo);
+    }
   }
 
   // WARN: dummy ship placement
