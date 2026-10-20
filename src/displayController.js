@@ -1,8 +1,3 @@
-// TODO: 
-// Store ships
-// When attacker hits a ship, remove defender's ship from shipsCoordinates
-// When passing computer, render whats in shipsCoordinates
-
 export const DisplayController = () => {
   const playerOneBoard = document.querySelector(
     ".board-playerOne > .board-grid",
@@ -18,7 +13,6 @@ export const DisplayController = () => {
 
   const renderShip = (player) => {
     const boardEl = _getCurrentGridEl(player);
-    const shipCoordinates = player.board.shipBuffer;
 
     shipCoordinates.forEach((coordinate) => {
       boardEl.querySelector(

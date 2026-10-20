@@ -2,12 +2,7 @@ import { Ship } from "./ship";
 
 export const GameBoard = () => {
   const board = makeBoard();
-  const missHistory = new Set();
-  // TODO:
-  const unattackedCoordinates = new Set();
-
-  // NOTE: For rendering purposes
-  let shipBuffer = [];
+  const attackHistory = new Set();
 
   const ships = {
     carrier: Ship(5),
@@ -21,8 +16,6 @@ export const GameBoard = () => {
     let [row, column] = coordinates;
     const shipLength = ships[shipName].length;
 
-    shipBuffer = [];
-
     if (isOutOfBounds(row, column, shipLength, direction)) return false;
     if (isOverlapping(board, row, column, shipLength, direction)) return false;
     if (isAdjacent(board, row, column, shipLength, direction, ships))
@@ -33,9 +26,6 @@ export const GameBoard = () => {
       const c = direction === "h" ? column + i : column;
 
       board[r][c] = ships[shipName];
-      unattackedCoordinates.add(`${r},${c}`);
-      // NOTE: might be redundant
-      shipBuffer.push({ x: r, y: c });
     }
 
     return true;
@@ -43,15 +33,18 @@ export const GameBoard = () => {
 
   const receiveAttack = (coordinates) => {
     const [r, c] = coordinates;
+    const key = `${r},${c}`;
 
-    if (missHistory.has(`${r},${c}`)) return "invalid";
+    if (attackHistory.has(key)) return "invalid";
+
+    attackHistory.add(key);
 
     if (board[r][c] === null) {
       board[r][c] = "x";
-      missHistory.add(`${r},${c}`);
       return "miss";
     } else {
-      return board[r][c].hit(coordinates) ? "hit" : "invalid";
+      board[r][c].hit();
+      return "hit";
     }
   };
 
@@ -69,8 +62,8 @@ export const GameBoard = () => {
     get ships() {
       return ships;
     },
-    get shipBuffer() {
-      return shipBuffer;
+    get attackHistory() {
+      return attackHistory;
     },
     placeShip,
     receiveAttack,
