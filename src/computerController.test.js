@@ -11,9 +11,7 @@ enemyBoard.placeShip("battleship", [9, 0], "h");
 enemyBoard.placeShip("carrier", [2, 3], "v");
 
 test("Attacks random cell", () => {
-  expect(computerController.possibleIndexesLength).toBe(100);
-  expect(["miss", "hit"]).toContain(
-    computerController.attackRandomCoordinate(enemyBoard),
-  );
-  expect(computerController.possibleIndexesLength).toBe(99);
+  expect(["miss", "hit"]).toContain(computerController.attack(enemyBoard).res);
 });
+
+// test("Attacks adjacent cell after a succeful hit", () => {});

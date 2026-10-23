@@ -21,12 +21,12 @@ export const GameController = () => {
     if (mode == "pvp") {
       displayController.renderShips(playerTwo);
     }
-  }
+  };
 
   // WARN: dummy ship placement
   const placeDummyShips = () => {
     playerOne.placeShip("patrolBoat", [0, 0], "h");
-    playerOne.placeShip("submarine", [5, 6], "h");
+    playerOne.placeShip("submarine", [5, 5], "h");
     playerOne.placeShip("destroyer", [7, 9], "v");
     playerOne.placeShip("battleship", [9, 0], "h");
     playerOne.placeShip("carrier", [2, 3], "v");
