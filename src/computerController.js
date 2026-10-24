@@ -6,21 +6,14 @@ export const ComputerController = () => {
     index % 10,
   ]);
 
-  const attack = (Player) => {
-    return _attackRandomCoordinate(Player.board);
-  };
-
-  // INFO: Private helpers
-  const _attackRandomCoordinate = (enemyBoard) => {
+  const chooseCoordinates = () => {
     const randomCoordinates = _pickRandomCoordinates(boardCoordinates);
     boardCoordinates.splice(randomCoordinates.index, 1);
 
-    return {
-      res: enemyBoard.receiveAttack(randomCoordinates.coordinates),
-      coordinates: randomCoordinates.coordinates,
-    };
+    return randomCoordinates.coordinates;
   };
 
+  // INFO: Private helpers
   const _pickRandomCoordinates = (array) => {
     const randomIndex = Math.floor(Math.random() * array.length);
     const randomCoordinates = array[randomIndex];
@@ -32,6 +25,6 @@ export const ComputerController = () => {
   };
 
   return {
-    attack,
+    chooseCoordinates,
   };
 };

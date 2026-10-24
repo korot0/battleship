@@ -41,7 +41,8 @@ export const GameController = () => {
 
     // NOTE: Emulate computer thinking
     setTimeout(() => {
-      computerController.attack(playerOne);
+      const coordinates = computerController.chooseCoordinates();
+      attacker.attack(defender, coordinates);
       displayController.renderShips(playerOne);
       _changeTurn();
     }, 1200);

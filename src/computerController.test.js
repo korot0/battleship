@@ -1,19 +1,20 @@
 import { ComputerController } from "./computerController.js";
-import { GameBoard } from "./gameboard.js";
-import { Player } from "./player.js";
+test("Chooses every board coordinate without repeats", () => {
+  const computerController = ComputerController();
+  const coordinates = Array.from({ length: 100 }, () =>
+    computerController.chooseCoordinates(),
+  );
 
-const computerController = ComputerController();
-const player = Player(1, "computer");
-const enemyBoard = GameBoard();
-
-enemyBoard.placeShip("patrolBoat", [0, 0], "h");
-enemyBoard.placeShip("submarine", [5, 6], "h");
-enemyBoard.placeShip("destroyer", [7, 9], "v");
-enemyBoard.placeShip("battleship", [9, 0], "h");
-enemyBoard.placeShip("carrier", [2, 3], "v");
-
-test("Attacks random cell", () => {
-  expect(["miss", "hit"]).toContain(computerController.attack(player).res);
+  expect(new Set(coordinates.map(([row, column]) => `${row},${column}`)).size)
+    .toBe(100);
+  for (const coordinate of coordinates) {
+    expect(coordinate).toHaveLength(2);
+    for (const value of coordinate) {
+      expect(Number.isInteger(value)).toBe(true);
+      expect(value).toBeGreaterThanOrEqual(0);
+      expect(value).toBeLessThan(10);
+    }
+  }
 });
 
 // test("Attacks adjacent cell after a succeful hit", () => {});
