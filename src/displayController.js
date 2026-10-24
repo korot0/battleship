@@ -2,7 +2,6 @@ export const DisplayController = () => {
   const playerOneBoard = document.querySelector(
     ".board-playerOne > .board-grid",
   );
-
   const playerTwoBoard = document.querySelector(
     ".board-playerTwo > .board-grid",
   );
@@ -10,34 +9,6 @@ export const DisplayController = () => {
   const renderGrids = () => {
     _renderGrid(playerOneBoard);
     _renderGrid(playerTwoBoard);
-  };
-
-  // FIX: Too many things happening here!
-  const addAttackListeners = (mode, callback) => {
-    if (mode === "pvc") {
-      playerTwoBoard.addEventListener("click", (e) => {
-        const cells = _getCellEl(e);
-        if (!cells) return;
-        const coordinates = _getCoordinates(cells);
-        const attackResponse = callback(coordinates);
-        _renderAttackedCell(attackResponse, cells);
-      });
-    } else {
-      playerOneBoard.addEventListener("click", (e) => {
-        const cells = _getCellEl(e);
-        if (!cells) return;
-        const coordinates = _getCoordinates(cells);
-        const attackResponse = callback(coordinates);
-        _renderAttackedCell(attackResponse, cells);
-      });
-      playerTwoBoard.addEventListener("click", (e) => {
-        const cells = _getCellEl(e);
-        if (!cells) return;
-        const coordinates = _getCoordinates(cells);
-        const attackResponse = callback(coordinates);
-        _renderAttackedCell(attackResponse, cells);
-      });
-    }
   };
 
   const toggleActiveGrid = (player) => {
@@ -71,6 +42,11 @@ export const DisplayController = () => {
     }
   };
 
+  // WARN: Need to add listeners to playerOne if pvp
+  const addAttackListeners = (callback) => {
+    _attachListeners(playerTwoBoard, callback);
+  };
+
   // INFO: PRIVATE METHODS
   const _getCurrentGridEl = (player) =>
     player.id === 1 ? playerOneBoard : playerTwoBoard;
@@ -85,6 +61,16 @@ export const DisplayController = () => {
         parent.appendChild(cell);
       }
     }
+  };
+
+  const _attachListeners = (board, callback) => {
+    board.addEventListener("click", (e) => {
+      const cells = _getCellEl(e);
+      if (!cells) return;
+      const coordinates = _getCoordinates(cells);
+      const attackResponse = callback(coordinates);
+      _renderAttackedCell(attackResponse, cells);
+    });
   };
 
   const _getCellEl = (e) => e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.

@@ -1,26 +1,22 @@
 import { DisplayController } from "./displayController.js";
 import { Player } from "./player.js";
+import { ComputerController } from "./computerController.js";
 
 export const GameController = () => {
   const displayController = DisplayController();
 
-  // NOTE: Will need to add playerOne and playerTwo creation to function based on pvp or pvc
+  // WARN: Will need to add playerOne and playerTwo creation to function based on pvp or pvc
   const playerOne = Player(1, "Human");
   const playerTwo = Player(2, "Computer");
+  const computerController = ComputerController();
   let attacker = playerOne;
   let defender = playerTwo;
 
-  const start = (mode) => {
+  const start = () => {
     displayController.renderGrids();
-    displayController.addAttackListeners(mode, _attack);
+    displayController.addAttackListeners(_attack);
     displayController.toggleActiveGrid(attacker);
-  };
-
-  const renderShips = (mode) => {
     displayController.renderShips(playerOne);
-    if (mode == "pvp") {
-      displayController.renderShips(playerTwo);
-    }
   };
 
   // WARN: dummy ship placement
@@ -42,22 +38,26 @@ export const GameController = () => {
   const _attack = (coordinates) => {
     const attackResponse = attacker.attack(defender, coordinates);
     _changeTurn();
+    setTimeout(() => {
+      computerController.attack(playerOne);
+      displayController.renderShips(playerOne);
+      _changeTurn();
+    }, 2000);
     return attackResponse;
   };
 
   const _changeTurn = () => {
     [attacker, defender] = [defender, attacker];
-    _toggleFogOfWar();
+    _toggleActiveGrids();
   };
 
-  const _toggleFogOfWar = () => {
+  const _toggleActiveGrids = () => {
     displayController.toggleActiveGrid(attacker);
     displayController.toggleActiveGrid(defender);
   };
 
   return {
     start,
-    renderShips,
     placeDummyShips,
   };
 };
