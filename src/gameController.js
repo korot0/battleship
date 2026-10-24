@@ -36,14 +36,17 @@ export const GameController = () => {
 
   // INFO: PRIVATE METHODS
   const _attack = (coordinates) => {
-    const attackResponse = attacker.attack(defender, coordinates);
+    const response = attacker.attack(defender, coordinates);
     _changeTurn();
+
+    // NOTE: Emulate computer thinking
     setTimeout(() => {
       computerController.attack(playerOne);
       displayController.renderShips(playerOne);
       _changeTurn();
-    }, 2000);
-    return attackResponse;
+    }, 1200);
+
+    return response;
   };
 
   const _changeTurn = () => {
