@@ -3,6 +3,7 @@ import { Player } from "./player.js";
 import { ComputerController } from "./computerController.js";
 
 export const GameController = () => {
+  let gameOver = false;
   const displayController = DisplayController();
 
   // WARN: Will need to add playerOne and playerTwo creation to function based on pvp or pvc
@@ -36,20 +37,36 @@ export const GameController = () => {
 
   // INFO: PRIVATE METHODS
   const _attack = (coordinates) => {
+    if (gameOver) return;
+
     const response = attacker.attack(defender, coordinates);
-    if (response === "invalid") return;
-  console.log(response)
+    if (response === "invalid") return response;
+    _checkWinCondition();
+    if (gameOver) return response;
     _changeTurn();
 
-    // NOTE: Emulate computer thinking
+    // INFO: Emulate computer thinking
     setTimeout(() => {
       const coordinates = computerController.chooseCoordinates();
       attacker.attack(defender, coordinates);
       displayController.renderShips(playerOne);
+      _checkWinCondition();
+      if (gameOver) return;
       _changeTurn();
-    }, 1200);
+    }, 1000);
 
     return response;
+  };
+
+  const _checkWinCondition = () => {
+    if (defender.board.allShipsSunk()) _finishGame();
+  };
+
+  const _finishGame = () => {
+    gameOver = true;
+    // TODO: Call method to display play again screen
+    displayController.disableBoards();
+    displayController.announceWinner(attacker);
   };
 
   const _changeTurn = () => {

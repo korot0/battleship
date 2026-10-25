@@ -42,6 +42,16 @@ export const DisplayController = () => {
     }
   };
 
+  const announceWinner = (player) => {
+    const winner = player.id === 1 ? "Player one" : "Player two";
+    document.querySelector(".announcements").textContent = `${winner} wins!`;
+  };
+
+  const disableBoards = () => {
+    playerOneBoard.classList.add("disabled");
+    playerTwoBoard.classList.add("disabled");
+  };
+
   // WARN: Need to add listeners to playerOne if pvp
   const addAttackListeners = (callback) => {
     _attachListeners(playerTwoBoard, callback);
@@ -93,5 +103,7 @@ export const DisplayController = () => {
     renderShips,
     addAttackListeners,
     toggleActiveGrid,
+    announceWinner,
+    disableBoards,
   };
 };
