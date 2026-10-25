@@ -37,6 +37,8 @@ export const GameController = () => {
   // INFO: PRIVATE METHODS
   const _attack = (coordinates) => {
     const response = attacker.attack(defender, coordinates);
+    if (response === "invalid") return;
+  console.log(response)
     _changeTurn();
 
     // NOTE: Emulate computer thinking

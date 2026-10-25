@@ -1,4 +1,5 @@
 import { ComputerController } from "./computerController.js";
+
 test("Chooses every board coordinate without repeats", () => {
   const computerController = ComputerController();
   const coordinates = Array.from({ length: 100 }, () =>
