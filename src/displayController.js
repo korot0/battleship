@@ -11,39 +11,50 @@ export const DisplayController = () => {
     _renderGrid(playerTwoBoard);
   };
 
-  const renderShip = (player) => {
-    const boardEl = _getCurrentGridEl(player);
-
-    shipCoordinates.forEach((coordinate) => {
-      boardEl.querySelector(
-        `[data-row="${coordinate.x}"][data-column="${coordinate.y}"`,
-      ).className = "ship";
-    });
+  const toggleActiveGrid = (player) => {
+    _getCurrentGridEl(player).classList.toggle("disabled");
   };
 
-  // FIX: Too many things happening here!
-  const addAttackListeners = (mode, callback) => {
-    if (mode === "pvc") {
-    } else {
-      playerOneBoard.addEventListener("click", (e) => {
-        const cells = _getCellEl(e);
-        if (!cells) return;
-        const coordinates = _getCoordinates(cells);
-        const attackResponse = callback(coordinates);
-        _renderAttackedCell(attackResponse, cells);
-      });
-      playerTwoBoard.addEventListener("click", (e) => {
-        const cells = _getCellEl(e);
-        if (!cells) return;
-        const coordinates = _getCoordinates(cells);
-        const attackResponse = callback(coordinates);
-        _renderAttackedCell(attackResponse, cells);
-      });
+  const renderShips = (player) => {
+    const board = player.board.board;
+    const boardEl = _getCurrentGridEl(player);
+    const attackHistory = player.board.attackHistory;
+
+    for (let row = 0; row < 10; row++) {
+      for (let col = 0; col < 10; col++) {
+        const cell = board[row][col];
+        const cellEl = boardEl.querySelector(
+          `[data-row="${row}"][data-column="${col}"]`,
+        );
+
+        if (cell === "miss") {
+          cellEl.className = "miss";
+        } else if (cell !== null) {
+          if (attackHistory.has(`${row},${col}`)) {
+            cellEl.className = "hit";
+          } else {
+            cellEl.className = "ship";
+          }
+        } else {
+          cellEl.className = "cell";
+        }
+      }
     }
   };
 
-  const toggleActiveGrid = (player) => {
-    _getCurrentGridEl(player).classList.toggle("disabled");
+  const announceWinner = (player) => {
+    const winner = player.id === 1 ? "Player one" : "Player two";
+    document.querySelector(".announcements").textContent = `${winner} wins!`;
+  };
+
+  const disableBoards = () => {
+    playerOneBoard.classList.add("disabled");
+    playerTwoBoard.classList.add("disabled");
+  };
+
+  // WARN: Need to add listeners to playerOne if pvp
+  const addAttackListeners = (callback) => {
+    _attachListeners(playerTwoBoard, callback);
   };
 
   // INFO: PRIVATE METHODS
@@ -60,6 +71,16 @@ export const DisplayController = () => {
         parent.appendChild(cell);
       }
     }
+  };
+
+  const _attachListeners = (board, callback) => {
+    board.addEventListener("click", (e) => {
+      const cells = _getCellEl(e);
+      if (!cells) return;
+      const coordinates = _getCoordinates(cells);
+      const attackResponse = callback(coordinates);
+      _renderAttackedCell(attackResponse, cells);
+    });
   };
 
   const _getCellEl = (e) => e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
@@ -79,8 +100,10 @@ export const DisplayController = () => {
 
   return {
     renderGrids,
-    renderShip,
+    renderShips,
     addAttackListeners,
     toggleActiveGrid,
+    announceWinner,
+    disableBoards,
   };
 };
