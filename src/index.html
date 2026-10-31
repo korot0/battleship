@@ -7,9 +7,15 @@
   </head>
   <body>
     <h1 class="game-title">BATTLESHIP</h1>
-    <p class="announcements">Place your ships...</p>
-    <section id="menu-screen"></section>
-    <section id="game-screen">
+    <div class="announcements">Select game mode:</div>
+    <section class="menu-screen">
+      <div class="mode-btns-container">
+        <button>PVC</button>
+        <button>PVP</button>
+      </div>
+      <button class="disabled">Start</button>
+    </section>
+    <section class="game-screen hidden">
       <section class="board board-playerOne">
         <div class="board-grid"></div>
         <p>Player One</p>
@@ -30,6 +36,6 @@
         </div>
       </section>
     </section>
-    <section id="end-screen"></section>
+    <section class="end-screen hidden"></section>
   </body>
 </html>
