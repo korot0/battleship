@@ -19,5 +19,8 @@ export const Player = (id, type) => {
     placeShip(...args) {
       return board.placeShip(...args);
     },
+    placeFleetRandomly() {
+      return board.placeFleetRandomly();
+    },
   };
 };

@@ -7,24 +7,23 @@ export const ComputerController = () => {
   ]);
 
   const chooseCoordinates = () => {
-    const randomCoordinates = _pickRandomCoordinates(boardCoordinates);
+    const randomCoordinates = pickRandomCoordinates(boardCoordinates);
     boardCoordinates.splice(randomCoordinates.index, 1);
 
     return randomCoordinates.coordinates;
   };
 
-  // INFO: Private helpers
-  const _pickRandomCoordinates = (array) => {
-    const randomIndex = Math.floor(Math.random() * array.length);
-    const randomCoordinates = array[randomIndex];
-
-    return {
-      index: randomIndex,
-      coordinates: randomCoordinates,
-    };
-  };
-
   return {
     chooseCoordinates,
+  };
+};
+
+const pickRandomCoordinates = (array) => {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  const randomCoordinates = array[randomIndex];
+
+  return {
+    index: randomIndex,
+    coordinates: randomCoordinates,
   };
 };

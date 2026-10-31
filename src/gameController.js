@@ -22,20 +22,10 @@ export const GameController = () => {
 
   // WARN: dummy ship placement
   const placeDummyShips = () => {
-    playerOne.placeShip("patrolBoat", [0, 0], "h");
-    playerOne.placeShip("submarine", [5, 5], "h");
-    playerOne.placeShip("destroyer", [7, 9], "v");
-    playerOne.placeShip("battleship", [9, 0], "h");
-    playerOne.placeShip("carrier", [2, 3], "v");
-
-    playerTwo.placeShip("patrolBoat", [5, 6], "h");
-    playerTwo.placeShip("submarine", [1, 7], "v");
-    playerTwo.placeShip("destroyer", [3, 2], "v");
-    playerTwo.placeShip("battleship", [8, 2], "h");
-    playerTwo.placeShip("carrier", [1, 0], "h");
+    playerOne.placeFleetRandomly();
+    playerTwo.placeFleetRandomly();
   };
 
-  // INFO: PRIVATE METHODS
   const _attack = (coordinates) => {
     if (gameOver) return;
 

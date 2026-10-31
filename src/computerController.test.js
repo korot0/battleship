@@ -6,8 +6,9 @@ test("Chooses every board coordinate without repeats", () => {
     computerController.chooseCoordinates(),
   );
 
-  expect(new Set(coordinates.map(([row, column]) => `${row},${column}`)).size)
-    .toBe(100);
+  expect(
+    new Set(coordinates.map(([row, column]) => `${row},${column}`)).size,
+  ).toBe(100);
   for (const coordinate of coordinates) {
     expect(coordinate).toHaveLength(2);
     for (const value of coordinate) {

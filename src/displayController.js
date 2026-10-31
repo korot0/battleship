@@ -7,8 +7,8 @@ export const DisplayController = () => {
   );
 
   const renderGrids = () => {
-    _renderGrid(playerOneBoard);
-    _renderGrid(playerTwoBoard);
+    renderGrid(playerOneBoard);
+    renderGrid(playerTwoBoard);
   };
 
   const toggleActiveGrid = (player) => {
@@ -54,49 +54,11 @@ export const DisplayController = () => {
 
   // WARN: Need to add listeners to playerOne if pvp
   const addAttackListeners = (callback) => {
-    _attachListeners(playerTwoBoard, callback);
+    attachListeners(playerTwoBoard, callback);
   };
 
-  // INFO: PRIVATE METHODS
   const _getCurrentGridEl = (player) =>
     player.id === 1 ? playerOneBoard : playerTwoBoard;
-
-  const _renderGrid = (parent) => {
-    for (let i = 0; i < 10; i++) {
-      for (let j = 0; j < 10; j++) {
-        const cell = document.createElement("div");
-        cell.className = "cell";
-        cell.dataset.row = i;
-        cell.dataset.column = j;
-        parent.appendChild(cell);
-      }
-    }
-  };
-
-  const _attachListeners = (board, callback) => {
-    board.addEventListener("click", (e) => {
-      const cells = _getCellEl(e);
-      if (!cells) return;
-      const coordinates = _getCoordinates(cells);
-      const attackResponse = callback(coordinates);
-      _renderAttackedCell(attackResponse, cells);
-    });
-  };
-
-  const _getCellEl = (e) => e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
-
-  const _getCoordinates = (el) => [el.dataset.row, el.dataset.column];
-
-  const _renderAttackedCell = (response, cells) => {
-    if (response === "hit") {
-      cells.className = "hit";
-    } else if (response === "miss") {
-      cells.className = "miss";
-    } else {
-      document.querySelector(".announcements").textContent =
-        "Invalid shot, try again...";
-    }
-  };
 
   return {
     renderGrids,
@@ -106,4 +68,41 @@ export const DisplayController = () => {
     announceWinner,
     disableBoards,
   };
+};
+
+const renderGrid = (parent) => {
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.dataset.row = i;
+      cell.dataset.column = j;
+      parent.appendChild(cell);
+    }
+  }
+};
+
+const attachListeners = (board, callback) => {
+  board.addEventListener("click", (e) => {
+    const cells = getCellEl(e);
+    if (!cells) return;
+    const coordinates = getCoordinates(cells);
+    const attackResponse = callback(coordinates);
+    renderAttackedCell(attackResponse, cells);
+  });
+};
+
+const getCellEl = (e) => e.target.closest(`.board-grid > div`); // NOTE: Need 'closest' to prevent undefined results from clicking a gap.
+
+const getCoordinates = (el) => [el.dataset.row, el.dataset.column];
+
+const renderAttackedCell = (response, cells) => {
+  if (response === "hit") {
+    cells.className = "hit";
+  } else if (response === "miss") {
+    cells.className = "miss";
+  } else {
+    document.querySelector(".announcements").textContent =
+      "Invalid shot, try again...";
+  }
 };
