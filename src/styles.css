@@ -39,7 +39,7 @@ body {
   align-self: center;
 }
 
-.board-layout {
+#game-screen {
   margin: 2rem;
   display: flex;
   gap: 3rem;
